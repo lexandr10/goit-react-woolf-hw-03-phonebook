@@ -28,6 +28,15 @@ export class App extends Component {
         user.name.toLowerCase().includes(this.state.filter)
     );
   };
+  componentDidMount() {
+    const localData = localStorage.getItem('product');
+    if (localData) this.setState({ contacts: JSON.parse(localData) });
+  }
+  componentDidUpdate() {
+    if (this.state.contacts)
+      localStorage.setItem('product', JSON.stringify(this.state.contacts));
+  }
+  componentWillUnmount() {}
   addContact = user => {
     this.setState(prev => ({
       contacts: [...prev.contacts, user],
