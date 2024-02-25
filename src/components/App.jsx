@@ -17,15 +17,15 @@ export class App extends Component {
     const localData = localStorage.getItem('product');
     if (localData) this.setState({ contacts: JSON.parse(localData) });
   }
-  componentDidUpdate() {
-    if (this.state.contacts)
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts !== this.state.contacts)
       localStorage.setItem('product', JSON.stringify(this.state.contacts));
   }
 
   filterChange = evt => {
     this.setState({ filter: evt.target.value });
   };
-  onDelete = ({ target: { id } }) => {
+  onDelete = id => {
     this.setState(prev => ({
       contacts: prev.contacts.filter(user => user.id !== id),
     }));
